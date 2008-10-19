@@ -20,25 +20,26 @@ sub bs_encode ($) {
     return join '', map { chr $text[$_ -1] } @$sa;
 }
 
-my $bwt = bs_encode file('/etc/passwd')->slurp;
+my $bwt = bs_encode file('/etc/httpd/conf/mime.types')->slurp;
 
 my $list = Algorithm::MTF::List->new;
 for (my $i = 0xff; $i >= 0; $i--) {
     $list->insert(chr $i);
+    # $list->insert( Algorithm::MTF::List::Node->new(chr $i) );
 }
 my $list_mtf = Algorithm::MTF::Encoder->new($list);
 
 my $array = Algorithm::MTF::Array->new;
-for (my $i = 0; $i < 0; $i++) {
+for (my $i = 0; $i < 0x100; $i++) {
     $array->[$i] = chr $i;
 }
 my $array_mtf = Algorithm::MTF::Encoder->new($array);
 
-timethese(100, {
+timethese(10, {
     list  => sub {
         $list_mtf->encode($bwt);
     },
-    array => sub {
-        $array_mtf->encode($bwt);
-    },
+    # array => sub {
+    #    $array_mtf->encode($bwt);
+    # },
 });
