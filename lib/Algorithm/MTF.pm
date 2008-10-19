@@ -7,19 +7,24 @@ our $VERSION = '0.01';
 
 __PACKAGE__->mk_accessors(qw/table/);
 
+use UNIVERSAL::require;
 use Algorithm::MTF::Encoder;
 use Algorithm::MTF::Decoder;
-use Algorithm::MTF::List;
 
 sub new {
-    my ($class, $value) = @_;
+    my ($class, $backend) = @_;
     my $self = $class->SUPER::new;
 
-    my $list = Algorithm::MTF::List->new;
-    for (my $i = 0xff; $i >= 0; $i--) {
-        $list->insert(chr $i);
+    if (not defined $backend) {
+        Algorithm::MTF::List->require or die $@;
+        my $list = Algorithm::MTF::List->new;
+        for (my $i = 0xff; $i >= 0; $i--) {
+            $list->insert(chr $i);
+        }
+        $self->table = $list;
+    } else {
+        $self->table = $backend;
     }
-    $self->table = $list;
 
     bless $self, $class;
 }
