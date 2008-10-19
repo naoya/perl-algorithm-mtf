@@ -1,0 +1,6 @@
+Revision history for Perl extension Algorithm::MTF.
+
+0.01  Sun Oct 19 17:14:14 2008
+	- original version; created by h2xs 1.23 with options
+		-AX -n Algorithm::MTF
+

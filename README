@@ -1,0 +1,32 @@
+NAME
+    Algorithm::MTF - Move-to-front transform encoder/decoder
+
+SYNOPSIS
+      use Algorithm::MTF;
+
+      my $encoder = Algorithm::MTF::Encoder->new;
+      my $code = $mtf->encode("aaabac"); ## $code is [ 97, 0, 0, 98, 1, 99 ]
+
+      my $decoder = Algorithm::MTF::Decoder->new;
+      say $mtf->decode([ 97, 0, 0, 98, 1, 99 ]); # "aaabac"
+
+DESCRIPTION
+    The move-to-front (or MTF) transform is an encoding of data (typically a
+    stream of bytes) designed to improve the performance of entropy encoding
+    techniques of compression. When efficiently implemented, it is fast
+    enough that its benefits usually justify including it as an extra step
+    in data compression algorithms. (quote from en.wikipedia.org)
+
+SEE ALSO
+    <http://en.wikipedia.org/wiki/Move-to-front_transform>
+
+AUTHOR
+    Naoya Ito, <naoya at bloghackers.net<gt>
+
+COPYRIGHT AND LICENSE
+    Copyright (C) 2008 by Naoya Ito
+
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself, either Perl version 5.8.8 or, at
+    your option, any later version of Perl 5 you may have available.
+
