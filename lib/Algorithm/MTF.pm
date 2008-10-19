@@ -16,12 +16,19 @@ sub new {
     my $self = $class->SUPER::new;
 
     if (not defined $backend) {
-        Algorithm::MTF::List->require or die $@;
-        my $list = Algorithm::MTF::List->new;
-        for (my $i = 0xff; $i >= 0; $i--) {
-            $list->insert(chr $i);
+#         Algorithm::MTF::List->require or die $@;
+#         my $list = Algorithm::MTF::List->new;
+#         for (my $i = 0xff; $i >= 0; $i--) {
+#             $list->insert(chr $i);
+#         }
+#         $self->table = $list;
+
+        Algorithm::MTF::Array->require or die $@;
+        my $array = Algorithm::MTF::Array->new;
+        for (my $i = 0; $i < 0x100; $i++) {
+            $array->[$i] = chr $i;
         }
-        $self->table = $list;
+        $self->table = $array;
     } else {
         $self->table = $backend;
     }
